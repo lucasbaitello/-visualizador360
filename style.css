@@ -111,13 +111,14 @@ body.light-theme .toggle-thumb {
 /* Centraliza os botões na barra de navegação do visualizador */
 .psv-navbar {
     display: flex;
-    align-items: center;     /* Centraliza verticalmente */
-
-    /* Efeitos de hover que estavam funcionando */
+    align-items: center;            /* Centraliza verticalmente */
+    gap: var(--psv-gap);            /* Espaçamento entre itens (ajuste em :root) */
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
-    padding-top: 10px;
-    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent 25px);
+    padding-top: var(--psv-gradient-height); /* Altura da área de hover/gradiente */
+    background: linear-gradient(
+        to top, var(--psv-navbar-gradient-color), transparent var(--psv-gradient-height)
+    );
 }
 
 .psv-navbar:hover {
@@ -126,13 +127,13 @@ body.light-theme .toggle-thumb {
 
 /* Diminui o tamanho dos botões */
 .psv-navbar .psv-button {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     padding: 4px;
 }
 
 .psv-button svg {
-    width: 18px;
+    width: 16px;
 }
 
 .main-header nav a {
@@ -218,9 +219,9 @@ main {
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
     /* Adiciona uma área de hover transparente acima da barra */
-    padding-top: 40px;
+    padding-top: 14px;
     /* Garante que o padding não adicione cor de fundo */
-    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent 40px);
+    background: linear-gradient(to top, rgba(0,0,0,0.55), transparent 14px);
 }
 
 /* Mostra a barra ao passar o mouse sobre sua área (incluindo o padding) */
@@ -267,3 +268,173 @@ main {
 .main-footer a:hover {
     text-decoration: underline;
 }
+
+/* Gradiente ajustado para tema claro */
+body.light-theme .psv-navbar {
+    background: linear-gradient(to top, rgba(255,255,255,0.55), transparent 14px);
+}
+
+/* Garante que o item spacer empurre o fullscreen para a direita */
+.psv-navbar .psv-spacer {
+    flex: 1 1 auto;
+}
+
+/* Alinha o botão de fullscreen à direita de forma robusta */
+.psv-navbar .psv-button[title="Fullscreen"],
+.psv-navbar .psv-button--fullscreen,
+.psv-navbar .psv-fullscreen-button,
+.psv-navbar .psv-button[data-id="fullscreen"],
+.psv-navbar .psv-button-group:last-child {
+    margin-left: auto;
+}
+
+:root {
+  /* ====== Ajustes da Navbar do Viewer (pontos de configuração) ====== */
+  --psv-gradient-height: 64px; /* ALTURA DA FAIXA DO GRADIENTE (aumente/diminua aqui) */
+  --psv-gap: 8px;              /* ESPAÇAMENTO entre itens da navbar */
+  --psv-button-size: 28px;     /* TAMANHO dos botões (largura/altura) */
+  --psv-icon-size: 16px;       /* TAMANHO dos ícones dentro dos botões */
+  --psv-navbar-gradient-color: rgba(0,0,0,0.55); /* COR do gradiente no tema escuro */
+  --psv-button-border: rgba(255,255,255,0.28);   /* COR da borda dos botões (escuro) */
+  --psv-button-bg: rgba(255,255,255,0.06);       /* FUNDO dos botões (escuro) */
+  --psv-button-bg-hover: rgba(255,255,255,0.12); /* FUNDO no hover (escuro) */
+  --psv-button-shadow: 0 2px 8px rgba(0,0,0,0.25);/* SOMBRA dos botões */
+  --psv-thumb-size: 16px;      /* TAMANHO do thumb do slider */
+}
+
+body.light-theme {
+  /* ====== Overrides para tema claro ====== */
+  --psv-navbar-gradient-color: rgba(255,255,255,0.55);
+  --psv-button-border: rgba(0,0,0,0.25);
+  --psv-button-bg: rgba(0,0,0,0.06);
+  --psv-button-bg-hover: rgba(255, 255, 255, 0.297);
+  --psv-button-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Centraliza e organiza os itens da navbar do viewer */
+.psv-navbar {
+  display: flex;
+  align-items: center;            /* Centraliza verticalmente */
+  gap: var(--psv-gap);            /* Espaçamento entre itens (ajuste em :root) */
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  padding-top: var(--psv-gradient-height); /* Altura da área de hover/gradiente */
+  background: linear-gradient(
+    to top, var(--psv-navbar-gradient-color), transparent var(--psv-gradient-height)
+  );
+}
+
+/* Agrupa com espaçamento interno consistente */
+.psv-navbar .psv-button-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 56px; /* Espaço entre zoomOut, zoomRange e zoomIn */
+}
+
+/* Mantém zoomRange próximo dos ícones e define largura do slider */
+/* Slider de zoom: sem container de botão, com sombra no thumb */
+.psv-navbar .psv-zoom-range {
+  margin: 0 6px;
+  padding: 0;
+  background: none;
+  border: none;
+}
+.psv-navbar .psv-zoom-range input[type="range"] {
+  width: 140px; /* LARGURA do slider */
+  height: 4px;
+  appearance: none;
+  background: linear-gradient(to right, rgba(255,255,255,0.35), rgba(255,255,255,0.15));
+  border-radius: 6px;
+}
+.psv-navbar .psv-zoom-range input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: var(--psv-thumb-size);
+  height: var(--psv-thumb-size);
+  border-radius: 50%;
+  background: var(--text-color);
+  border: 1px solid var(--psv-button-border);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+}
+.psv-navbar .psv-zoom-range input[type="range"]::-moz-range-thumb {
+  width: var(--psv-thumb-size);
+  height: var(--psv-thumb-size);
+  border-radius: 50%;
+  background: var(--text-color);
+  border: 1px solid var(--psv-button-border);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+}
+.psv-navbar .psv-zoom-range input[type="range"]::-moz-range-track {
+  height: 4px;
+  background: linear-gradient(to right, rgba(255,255,255,0.35), rgba(255,255,255,0.15));
+  border-radius: 6px;
+}
+
+/* Tamanho e destaque dos botões */
+.psv-navbar .psv-button {
+  width: var(--psv-button-size);
+  height: var(--psv-button-size);
+  padding: 0;
+  border-radius: 8px;
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+  transition: transform 0.15s ease-in-out;
+}
+.psv-navbar .psv-button:hover { transform: translateY(-1px); }
+
+/* Destacar somente o fullscreen como botão */
+.psv-navbar .psv-button[title="Fullscreen"],
+.psv-navbar .psv-button--fullscreen,
+.psv-navbar .psv-fullscreen-button,
+.psv-navbar .psv-button[data-id="fullscreen"] {
+  padding: 4px;
+  border: 1px solid var(--psv-button-border);
+  background-color: var(--psv-button-bg);
+  box-shadow: var(--psv-button-shadow);
+}
+.psv-navbar .psv-button[title="Fullscreen"] svg,
+.psv-navbar .psv-button--fullscreen svg,
+.psv-navbar .psv-fullscreen-button svg,
+.psv-navbar .psv-button[data-id="fullscreen"] svg {
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35)); /* Sombra direta no ícone */
+}
+
+/* Empurra o fullscreen para a direita */
+.psv-navbar .psv-spacer { flex: 1 1 auto; }
+.psv-navbar .psv-button[title="Fullscreen"],
+.psv-navbar .psv-button--fullscreen,
+.psv-navbar .psv-fullscreen-button,
+.psv-navbar .psv-button[data-id="fullscreen"],
+.psv-navbar .psv-button-group:last-child { margin-left: auto; }
+
+/* Mostra a barra ao passar o mouse sobre sua área (inclui o padding) */
+.psv-navbar:hover { opacity: 1; }
+/* --- Correções de usabilidade do slider e consistência de tema --- */
+/* Reduz qualquer espaçamento residual do antigo grupo de zoom */
+.psv-navbar .psv-button-group { gap: 0; }
+
+/* Ajusta a área de interação do slider para ficar precisa */
+.psv-navbar .psv-zoom-range { margin: 0; display: inline-block; pointer-events: auto; }
+.psv-navbar .psv-zoom-range input[type="range"] { width: 180px; cursor: pointer; }
+.psv-navbar .psv-zoom-range input[type="range"]::-webkit-slider-runnable-track { height: 4px; }
+.psv-navbar .psv-zoom-range input[type="range"]::-moz-range-track { height: 4px; }
+
+/* Centraliza o ícone de fullscreen dentro do seu botão */
+.psv-navbar .psv-button[title="Fullscreen"],
+.psv-navbar .psv-button--fullscreen,
+.psv-navbar .psv-fullscreen-button,
+.psv-navbar .psv-button[data-id="fullscreen"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Gradiente consistente no tema claro usando as variáveis */
+body.light-theme .psv-navbar {
+  background: linear-gradient(
+    to top, var(--psv-navbar-gradient-color), transparent var(--psv-gradient-height)
+  );
+}
+
+/* Mostra a barra ao passar o mouse sobre sua área (inclui o padding) */
+.psv-navbar:hover { opacity: 1; }

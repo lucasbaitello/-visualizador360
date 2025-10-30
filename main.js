@@ -1,6 +1,6 @@
+import '@photo-sphere-viewer/core/index.css';
 import './style.css';
 import { Viewer } from '@photo-sphere-viewer/core';
-import '@photo-sphere-viewer/core/index.css';
 
 // --- LÓGICA DO SELETOR DE TEMA ---
 const themeToggleBtn = document.querySelector('#theme-toggle-btn');
@@ -71,9 +71,9 @@ async function init() {
       container: viewerContainer,
       panorama: `/images/360/${images[0]}`,
       loadingTxt: 'Carregando...',
-      navbar: [ 
-        'zoom',
-        'spacer', // Item "em branco" para empurrar o próximo para a direita
+      navbar: [
+        'zoomRange',
+        'spacer',
         'fullscreen',
       ],
       minFov: 10,
