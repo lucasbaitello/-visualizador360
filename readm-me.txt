@@ -1,0 +1,4 @@
+yarn run dev --host
+
+npm run generate
+
