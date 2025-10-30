@@ -104,19 +104,35 @@ body.light-theme .toggle-thumb {
 }
 
 .main-footer {
-    font-size: 0.8rem; /* Fonte do rodapé diminuída */
-    text-align: center;
+    font-size: 0.6rem; /* Fonte do rodapé diminuída */
+    text-align: left;
 }
 
-/* Ajustes na Barra de Navegação do Visualizador */
+/* Centraliza os botões na barra de navegação do visualizador */
+.psv-navbar {
+    display: flex;
+    align-items: center;     /* Centraliza verticalmente */
+
+    /* Efeitos de hover que estavam funcionando */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    padding-top: 10px;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent 25px);
+}
+
+.psv-navbar:hover {
+    opacity: 1;
+}
+
+/* Diminui o tamanho dos botões */
 .psv-navbar .psv-button {
-    width: 30px; /* Metade do padrão (aprox) */
-    height: 30px; /* Metade do padrão (aprox) */
-    padding: 5px;
+    width: 28px;
+    height: 28px;
+    padding: 4px;
 }
 
-.psv-caption {
-    font-size: 0.9rem;
+.psv-button svg {
+    width: 18px;
 }
 
 .main-header nav a {

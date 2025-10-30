@@ -9,7 +9,6 @@ const themeToggleBtn = document.querySelector('#theme-toggle-btn');
 const currentTheme = localStorage.getItem('theme');
 if (currentTheme === 'light') {
   document.body.classList.add('light-theme');
-  themeToggleBtn.textContent = '🌙';
 }
 
 themeToggleBtn.addEventListener('click', () => {
@@ -46,7 +45,7 @@ menuToggleBtn.addEventListener('click', () => {
 function formatCaption(filename) {
   return filename
     .replace(/\.(jpg|jpeg|png)$/i, '')
-    .replace(/[_-]/g, ' ');
+    .replace(/[_-]/g, '-');
 }
 
 // Função principal para iniciar a aplicação
@@ -71,10 +70,13 @@ async function init() {
     const viewer = new Viewer({
       container: viewerContainer,
       panorama: `/images/360/${images[0]}`,
-      caption: formatCaption(images[0]),
       loadingTxt: 'Carregando...',
-      navbar: ['zoom', 'caption', 'fullscreen'],
-      minFov: 20,
+      navbar: [ 
+        'zoom',
+        'spacer', // Item "em branco" para empurrar o próximo para a direita
+        'fullscreen',
+      ],
+      minFov: 10,
       maxFov: 120,
     });
 
