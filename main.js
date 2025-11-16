@@ -84,7 +84,7 @@ async function init() {
     let autoRotationTimeout;
     let isAutoRotating = false;
     const INACTIVITY_DELAY = 3000; // 3 segundos
-    const ROTATION_SPEED = 0.2; // velocidade da rotação
+    const ROTATION_SPEED = 0.03; // velocidade da rotação
 
     function startAutoRotation() {
       if (!isAutoRotating) {
