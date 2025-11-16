@@ -80,6 +80,38 @@ async function init() {
       maxFov: 120,
     });
 
+    // Auto-rotação após inatividade
+    let autoRotationTimeout;
+    let isAutoRotating = false;
+    const INACTIVITY_DELAY = 3000; // 3 segundos
+    const ROTATION_SPEED = 0.2; // velocidade da rotação
+
+    function startAutoRotation() {
+      if (!isAutoRotating) {
+        isAutoRotating = true;
+        viewer.getPlugin('autorotate')?.start() || viewer.dynamics.position.roll({ yaw: true }, ROTATION_SPEED);
+      }
+    }
+
+    function stopAutoRotation() {
+      if (isAutoRotating) {
+        isAutoRotating = false;
+        viewer.getPlugin('autorotate')?.stop() || viewer.dynamics.position.stop();
+      }
+      clearTimeout(autoRotationTimeout);
+      autoRotationTimeout = setTimeout(startAutoRotation, INACTIVITY_DELAY);
+    }
+
+    // Eventos para detectar interação do usuário
+    viewer.addEventListener('user-interaction', stopAutoRotation);
+    viewer.addEventListener('click', stopAutoRotation);
+    viewer.addEventListener('dblclick', stopAutoRotation);
+    
+    // Iniciar auto-rotação após o carregamento inicial
+    viewer.addEventListener('ready', () => {
+      autoRotationTimeout = setTimeout(startAutoRotation, INACTIVITY_DELAY);
+    });
+
     images.forEach((image, index) => {
       const imagePath = `/images/360/${image}`;
       const container = document.createElement('div');
